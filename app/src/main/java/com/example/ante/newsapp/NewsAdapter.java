@@ -30,28 +30,44 @@ public class NewsAdapter extends ArrayAdapter<News> {
 
         // Check if the existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
+        // to reference the child views for later actions
+        ViewHolder holder;
+
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.news_list_row, parent, false);
+
+            // Get the object located at this position in the list
+            News currentPlace = getItem(position);
+
+            holder = new ViewHolder();
+
+            // Find the TextView in the news_list_row.xml layout with the ID title, date, category
+            holder.titleTextView = (TextView) listItemView.findViewById(R.id.title);
+            holder.dateTextView = (TextView) listItemView.findViewById(R.id.date);
+            holder.categoryTextView = (TextView) listItemView.findViewById(R.id.category);
+
+            // Get the title, date, category from the current News object and
+            // set this text on the TextViews
+            holder.titleTextView.setText(currentPlace.getmTitle());
+            holder.dateTextView.setText(currentPlace.getmDate());
+            holder.categoryTextView.setText(currentPlace.getmCategory());
+
+            // associate the holder with the view for later lookup
+            listItemView.setTag(holder);
+        } else {
+            // view already exists, get the holder instance from the view
+            holder = (ViewHolder) listItemView.getTag();
         }
-
-        // Get the object located at this position in the list
-        News currentPlace = getItem(position);
-
-        // Find the TextView in the news_list_row.xml layout with the ID title, date, category
-        TextView titleTextView = (TextView) listItemView.findViewById(R.id.title);
-        TextView dateTextView = (TextView) listItemView.findViewById(R.id.date);
-        TextView categoryTextView = (TextView) listItemView.findViewById(R.id.category);
-
-        // Get the title, date, category from the current News object and
-        // set this text on the TextViews
-        titleTextView.setText(currentPlace.getmTitle());
-        dateTextView.setText(currentPlace.getmDate());
-        categoryTextView.setText(currentPlace.getmCategory());
-
         // Return the whole list item layout
         // so that it can be shown in the ListView
         return listItemView;
+    }
+
+    static class ViewHolder {
+        TextView titleTextView;
+        TextView dateTextView;
+        TextView categoryTextView;
     }
 }
 
