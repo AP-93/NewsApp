@@ -1,6 +1,6 @@
 # NewsApp
 
- * App connects to the Internet to provides news articles on various topics.
+ * App connects to the Internet and provides news articles on various topics.
  * Clicking on a story opens the story in the user’s browser.
  * Guardian API
 
